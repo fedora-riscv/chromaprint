@@ -1,6 +1,6 @@
 Name:           chromaprint
-Version:        0.5
-Release:        4%{?dist}
+Version:        0.6
+Release:        1%{?dist}
 Summary:        Library implementing the AcoustID fingerprinting
 
 Group:          System Environment/Libraries
@@ -12,7 +12,6 @@ BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires:  cmake
 BuildRequires:  fftw-devel >= 3
-BuildRequires:  python
 
 %description
 Chromaprint library is the core component of the AcoustID project. It's a 
@@ -47,14 +46,7 @@ Requires:       pkgconfig
 This package contains the headers that programmers will need to develop
 applications which will use %{name}. 
 
-%package -n python-chromaprint
-Summary:        Python module for %{name} 
-Group:          Development/Libraries
-License:        MIT
-
 Requires:       libchromaprint%{?_isa} = %{version}-%{release}
-%description -n python-chromaprint
-This package contains the python module to use %{name}. 
 
 %prep
 %setup -q
@@ -65,19 +57,11 @@ This package contains the python module to use %{name}.
 %build
 make %{?_smp_mflags}
 
-cd python
-CFLAGS="$RPM_OPT_FLAGS" %{__python} setup.py build
-cd ..
-
-
 %install
 rm  -rf %{buildroot}
 
 make install DESTDIR=%{buildroot}
 
-cd python
-%{__python} setup.py install -O1 --skip-build --root=%{buildroot}
-cd ..
 rm  -f %{buildroot}%{_libdir}/lib*.la
 
 
@@ -100,14 +84,12 @@ rm  -rf %{buildroot}
 %{_libdir}/lib*.so
 %{_libdir}/pkgconfig/*.pc
 
-# MIT licensed
-%files -n python-chromaprint
-%doc python/examples python/LICENSE
-%{python_sitelib}/chromaprint
-%{python_sitelib}/*.egg-info
-
-
 %changelog
+* Tue Dec 27 2011 Ismael Olea <ismael@olea.org> - 0.6-1
+- update to 0.6
+- python bindings removed
+- python not a requirment now
+
 * Wed Dec 07 2011 Ismael Olea <ismael@olea.org> - 0.5-4
 - minor spec enhancements
 
