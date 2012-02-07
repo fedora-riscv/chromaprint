@@ -1,14 +1,12 @@
 Name:           chromaprint
 Version:        0.6
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        Library implementing the AcoustID fingerprinting
 
 Group:          System Environment/Libraries
 License:        LGPLv2+
 URL:            http://www.acoustid.org/chromaprint/
 Source:         https://github.com/downloads/lalinsky/chromaprint/%{name}-%{version}.tar.gz
-
-Obsoletes:      python-chromaprint < 0.6-3
 
 BuildRequires:  cmake
 BuildRequires:  fftw-devel >= 3
@@ -24,6 +22,7 @@ found in the main header file.
 %package -n libchromaprint
 Summary:        Library implementing the AcoustID fingerprinting
 Group:          System Environment/Libraries
+Obsoletes:      python-chromaprint < 0.6-3
 
 %description -n libchromaprint
 Chromaprint library is the core component of the AcoustID project. It's a 
@@ -73,6 +72,9 @@ rm  -f %{buildroot}%{_libdir}/lib*.la
 %{_libdir}/pkgconfig/*.pc
 
 %changelog
+* Tue Feb 7 2012 Ismael Olea <ismael@olea.org> - 0.6-4
+- moved the obsoletes python-chromaprint to libchromaprint
+
 * Mon Feb 6 2012 Ismael Olea <ismael@olea.org> - 0.6-3
 - cosmetic SPEC changes
 - obsoleting python-chromaprint (see #786946)
