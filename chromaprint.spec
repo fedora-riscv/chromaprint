@@ -1,6 +1,6 @@
 Name:           chromaprint
 Version:        0.6
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Library implementing the AcoustID fingerprinting
 
 Group:          System Environment/Libraries
@@ -8,7 +8,7 @@ License:        LGPLv2+
 URL:            http://www.acoustid.org/chromaprint/
 Source:         https://github.com/downloads/lalinsky/chromaprint/%{name}-%{version}.tar.gz
 
-BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
+Obsoletes:      python-chromaprint < 0.6-3
 
 BuildRequires:  cmake
 BuildRequires:  fftw-devel >= 3
@@ -18,35 +18,30 @@ Chromaprint library is the core component of the AcoustID project. It's a
 client-side library that implements a custom algorithm for extracting 
 fingerprints from raw audio sources.
 
-The library exposes a simple C API and the package also includes bindings for
-the Python language. The documentation for the C API can be found in the main
-header file.
+The library exposes a simple C API. The documentation for the C API can be
+found in the main header file.
 
 %package -n libchromaprint
 Summary:        Library implementing the AcoustID fingerprinting
-Group:          Development/Libraries
+Group:          System Environment/Libraries
 
 %description -n libchromaprint
 Chromaprint library is the core component of the AcoustID project. It's a 
 client-side library that implements a custom algorithm for extracting 
 fingerprints from raw audio sources.
 
-The library exposes a simple C API and the package also includes bindings for
-the Python language. The documentation for the C API can be found in the main
-header file.
+The library exposes a simple C API. The documentation for the C API can be
+found in the main header file.
 
 %package -n libchromaprint-devel
 Summary:        Headers for developing programs that will use %{name} 
 Group:          Development/Libraries
-
 Requires:       libchromaprint%{?_isa} = %{version}-%{release}
-Requires:       pkgconfig
 
 %description -n libchromaprint-devel
 This package contains the headers that programmers will need to develop
 applications which will use %{name}. 
 
-Requires:       libchromaprint%{?_isa} = %{version}-%{release}
 
 %prep
 %setup -q
@@ -54,19 +49,14 @@ Requires:       libchromaprint%{?_isa} = %{version}-%{release}
 # examples require ffmpeg, so turn off examples
 %{cmake} -DBUILD_EXAMPLES=off -DBUILD_TESTS=off
 
+
 %build
 make %{?_smp_mflags}
 
+
 %install
-rm  -rf %{buildroot}
-
 make install DESTDIR=%{buildroot}
-
 rm  -f %{buildroot}%{_libdir}/lib*.la
-
-
-%clean
-rm  -rf %{buildroot}
 
 
 %post -n libchromaprint -p /sbin/ldconfig
@@ -74,17 +64,19 @@ rm  -rf %{buildroot}
 %postun -n libchromaprint -p /sbin/ldconfig
 
 %files -n libchromaprint
-%defattr(-,root,root,-)
 %doc CHANGES.txt COPYING.txt NEWS.txt README.txt
 %{_libdir}/lib*.so.*
 
 %files -n libchromaprint-devel
-%defattr(-,root,root,-)
 %{_includedir}/chromaprint.h
 %{_libdir}/lib*.so
 %{_libdir}/pkgconfig/*.pc
 
 %changelog
+* Mon Feb 6 2012 Ismael Olea <ismael@olea.org> - 0.6-3
+- cosmetic SPEC changes
+- obsoleting python-chromaprint (see #786946)
+
 * Thu Jan 12 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.6-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_17_Mass_Rebuild
 
