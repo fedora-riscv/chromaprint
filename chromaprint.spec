@@ -1,6 +1,6 @@
 Name:           chromaprint
-Version:        0.6
-Release:        5%{?dist}
+Version:        0.7
+Release:        1%{?dist}
 Summary:        Library implementing the AcoustID fingerprinting
 
 Group:          System Environment/Libraries
@@ -72,6 +72,9 @@ rm  -f %{buildroot}%{_libdir}/lib*.la
 %{_libdir}/pkgconfig/*.pc
 
 %changelog
+* Thu Sep 6 2012 Ismael Olea <ismael@olea.org> - 0.7-1
+- update to 0.7
+
 * Wed Jul 18 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.6-5
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_18_Mass_Rebuild
 
