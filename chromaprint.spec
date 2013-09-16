@@ -1,12 +1,12 @@
 Name:           chromaprint
-Version:        0.7
-Release:        3%{?dist}
+Version:        1.0
+Release:        1%{?dist}
 Summary:        Library implementing the AcoustID fingerprinting
 
 Group:          System Environment/Libraries
 License:        LGPLv2+
 URL:            http://www.acoustid.org/chromaprint/
-Source:         https://github.com/downloads/lalinsky/chromaprint/%{name}-%{version}.tar.gz
+Source:         https://bitbucket.org/acoustid/%{name}/downloads/%{name}-%{version}.tar.gz
 
 BuildRequires:  cmake
 BuildRequires:  fftw-devel >= 3
@@ -72,6 +72,9 @@ rm  -f %{buildroot}%{_libdir}/lib*.la
 %{_libdir}/pkgconfig/*.pc
 
 %changelog
+* Mon Sep 16 2013 Ismael Olea <ismael@olea.org> - 1.0-1
+- update to 1.0
+
 * Sat Aug 03 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.7-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_20_Mass_Rebuild
 
