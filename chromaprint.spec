@@ -1,5 +1,5 @@
 Name:           chromaprint
-Version:        1.0
+Version:        1.1
 Release:        1%{?dist}
 Summary:        Library implementing the AcoustID fingerprinting
 
@@ -63,7 +63,7 @@ rm  -f %{buildroot}%{_libdir}/lib*.la
 %postun -n libchromaprint -p /sbin/ldconfig
 
 %files -n libchromaprint
-%doc CHANGES.txt COPYING.txt NEWS.txt README.txt
+%doc COPYING.txt NEWS.txt README.txt
 %{_libdir}/lib*.so.*
 
 %files -n libchromaprint-devel
@@ -72,6 +72,10 @@ rm  -f %{buildroot}%{_libdir}/lib*.la
 %{_libdir}/pkgconfig/*.pc
 
 %changelog
+* Sat Nov 23 2013 Ismael Olea <ismael@olea.org> - 1.1-1   
+- update to 1.1
+- CHANGES.txt file removed in upstream
+
 * Mon Sep 16 2013 Ismael Olea <ismael@olea.org> - 1.0-1
 - update to 1.0
 
