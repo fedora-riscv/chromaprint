@@ -1,6 +1,6 @@
 Name:           chromaprint
-Version:        1.1
-Release:        3%{?dist}
+Version:        1.2
+Release:        1%{?dist}
 Summary:        Library implementing the AcoustID fingerprinting
 
 Group:          System Environment/Libraries
@@ -63,7 +63,7 @@ rm  -f %{buildroot}%{_libdir}/lib*.la
 %postun -n libchromaprint -p /sbin/ldconfig
 
 %files -n libchromaprint
-%doc COPYING.txt NEWS.txt README.txt
+%doc COPYING.txt NEWS.txt README.md
 %{_libdir}/lib*.so.*
 
 %files -n libchromaprint-devel
@@ -72,6 +72,9 @@ rm  -f %{buildroot}%{_libdir}/lib*.la
 %{_libdir}/pkgconfig/*.pc
 
 %changelog
+* Tue Mar 17 2015 Ismael Olea <ismael@olea.org> - 1.2-1   
+- update to 1.2
+
 * Sat Aug 16 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.1-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_21_22_Mass_Rebuild
 
@@ -118,7 +121,7 @@ rm  -f %{buildroot}%{_libdir}/lib*.la
 * Mon Dec 05 2011 Ismael Olea <ismael@olea.org> - 0.5-3
 - Macro cleaning at spec
 
-* Thu Nov 18 2011 Ismael Olea <ismael@olea.org> - 0.5-2
+* Fri Nov 18 2011 Ismael Olea <ismael@olea.org> - 0.5-2
 - first version for Fedora
 
 * Thu Nov 10 2011 Ismael Olea <ismael@olea.org> - 0.5-1
