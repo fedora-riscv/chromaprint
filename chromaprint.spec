@@ -1,12 +1,12 @@
 Name:           chromaprint
-Version:        1.2
-Release:        8%{?dist}
+Version:        1.4.2
+Release:        1%{?dist}
 Summary:        Library implementing the AcoustID fingerprinting
 
 Group:          System Environment/Libraries
-License:        LGPLv2+
-URL:            http://www.acoustid.org/chromaprint/
-Source:         https://bitbucket.org/acoustid/%{name}/downloads/%{name}-%{version}.tar.gz
+License:        MIT and LGPLv2+
+URL:            http://www.acoustid.org/chromaprint
+Source:         https://github.com/acoustid/%{name}/releases/download/v%{version}/%{name}-%{version}.tar.gz
 
 BuildRequires:  cmake
 BuildRequires:  fftw-devel >= 3
@@ -22,6 +22,7 @@ found in the main header file.
 %package -n libchromaprint
 Summary:        Library implementing the AcoustID fingerprinting
 Group:          System Environment/Libraries
+License:        GPLv2+
 Obsoletes:      python-chromaprint < 0.6-3
 
 %description -n libchromaprint
@@ -45,8 +46,8 @@ applications which will use %{name}.
 %prep
 %setup -q
 
-# examples require ffmpeg, so turn off examples
-%{cmake} -DBUILD_EXAMPLES=off -DBUILD_TESTS=off
+# examples and cli tools equire ffmpeg, so turn off; test depend of external artifact so turn off.
+%{cmake} -DBUILD_EXAMPLES=OFF -DBUILD_TESTS=OFF -DCMAKE_BUILD_TYPE=Release -DBUILD_TOOLS=OFF
 
 
 %build
@@ -63,7 +64,9 @@ rm  -f %{buildroot}%{_libdir}/lib*.la
 %postun -n libchromaprint -p /sbin/ldconfig
 
 %files -n libchromaprint
-%doc COPYING.txt NEWS.txt README.md
+%doc NEWS.txt README.md
+%license LICENSE.md
+
 %{_libdir}/lib*.so.*
 
 %files -n libchromaprint-devel
@@ -72,6 +75,12 @@ rm  -f %{buildroot}%{_libdir}/lib*.la
 %{_libdir}/pkgconfig/*.pc
 
 %changelog
+* Thu Jan 04 2018 smael Olea <ismael@olea.org> - 1.4.2
+- upstream URL changed to github
+- updating to 1.4.2
+- renamed COPYING.txt LICENSE.md
+- binary licenses should be GPLv2+ because linking with fftw
+
 * Wed Aug 02 2017 Fedora Release Engineering <releng@fedoraproject.org> - 1.2-8
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_27_Binutils_Mass_Rebuild
 
