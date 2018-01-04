@@ -4,7 +4,7 @@ Release:        1%{?dist}
 Summary:        Library implementing the AcoustID fingerprinting
 
 Group:          System Environment/Libraries
-License:        MIT and LGPLv2+
+License:        GPLv2+
 URL:            http://www.acoustid.org/chromaprint
 Source:         https://github.com/acoustid/%{name}/releases/download/v%{version}/%{name}-%{version}.tar.gz
 
@@ -19,10 +19,12 @@ fingerprints from raw audio sources.
 The library exposes a simple C API. The documentation for the C API can be
 found in the main header file.
 
+License for binaries is GPLv2+ but source code is MIT + LGPLv2+
+
+
 %package -n libchromaprint
 Summary:        Library implementing the AcoustID fingerprinting
 Group:          System Environment/Libraries
-License:        GPLv2+
 Obsoletes:      python-chromaprint < 0.6-3
 
 %description -n libchromaprint
@@ -33,6 +35,8 @@ fingerprints from raw audio sources.
 The library exposes a simple C API. The documentation for the C API can be
 found in the main header file.
 
+License for binaries is GPLv2+ but source code is MIT + LGPLv2+
+
 %package -n libchromaprint-devel
 Summary:        Headers for developing programs that will use %{name} 
 Group:          Development/Libraries
@@ -41,6 +45,9 @@ Requires:       libchromaprint%{?_isa} = %{version}-%{release}
 %description -n libchromaprint-devel
 This package contains the headers that programmers will need to develop
 applications which will use %{name}. 
+
+The library exposes a simple C API. The documentation for the C API can be
+found in the main header file.
 
 
 %prep
@@ -79,7 +86,7 @@ rm  -f %{buildroot}%{_libdir}/lib*.la
 - upstream URL changed to github
 - updating to 1.4.2
 - renamed COPYING.txt LICENSE.md
-- binary licenses should be GPLv2+ because linking with fftw
+- binary licenses should be GPLv2+ because linking with fftw (which uses GPLv2+)
 
 * Wed Aug 02 2017 Fedora Release Engineering <releng@fedoraproject.org> - 1.2-8
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_27_Binutils_Mass_Rebuild
