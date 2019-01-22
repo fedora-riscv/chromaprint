@@ -68,9 +68,7 @@ make install DESTDIR=%{buildroot}
 rm  -f %{buildroot}%{_libdir}/lib*.la
 
 
-%post -n libchromaprint -p /sbin/ldconfig
-
-%postun -n libchromaprint -p /sbin/ldconfig
+%ldconfig_scriptlets -n libchromaprint
 
 %files -n libchromaprint
 %doc NEWS.txt README.md
