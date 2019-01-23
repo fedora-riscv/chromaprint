@@ -1,6 +1,6 @@
 Name:           chromaprint
 Version:        1.4.2
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        Library implementing the AcoustID fingerprinting
 
 Group:          System Environment/Libraries
@@ -56,7 +56,7 @@ found in the main header file.
 %setup -q
 
 # examples and cli tools equire ffmpeg, so turn off; test depend of external artifact so turn off.
-%{cmake} -DBUILD_EXAMPLES=OFF -DBUILD_TESTS=OFF -DCMAKE_BUILD_TYPE=Release -DBUILD_TOOLS=OFF
+%{cmake} -DBUILD_EXAMPLES=OFF -DBUILD_TESTS=OFF -DCMAKE_BUILD_TYPE=Release -DBUILD_TOOLS=OFF .
 
 
 %build
@@ -82,6 +82,9 @@ rm  -f %{buildroot}%{_libdir}/lib*.la
 %{_libdir}/pkgconfig/*.pc
 
 %changelog
+* Wed Jan 23 2019 Björn Esser <besser82@fedoraproject.org> - 1.4.2-4
+- Append curdir to CMake invokation. (#1668512)
+
 * Thu Jul 12 2018 Fedora Release Engineering <releng@fedoraproject.org> - 1.4.2-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_29_Mass_Rebuild
 
