@@ -3,7 +3,6 @@ Version:        1.4.2
 Release:        4%{?dist}
 Summary:        Library implementing the AcoustID fingerprinting
 
-Group:          System Environment/Libraries
 License:        GPLv2+
 URL:            http://www.acoustid.org/chromaprint
 Source:         https://github.com/acoustid/%{name}/releases/download/v%{version}/%{name}-%{version}.tar.gz
@@ -26,7 +25,6 @@ License for binaries is GPLv2+ but source code is MIT + LGPLv2+
 
 %package -n libchromaprint
 Summary:        Library implementing the AcoustID fingerprinting
-Group:          System Environment/Libraries
 Obsoletes:      python-chromaprint < 0.6-3
 
 %description -n libchromaprint
@@ -41,7 +39,6 @@ License for binaries is GPLv2+ but source code is MIT + LGPLv2+
 
 %package -n libchromaprint-devel
 Summary:        Headers for developing programs that will use %{name} 
-Group:          Development/Libraries
 Requires:       libchromaprint%{?_isa} = %{version}-%{release}
 
 %description -n libchromaprint-devel
