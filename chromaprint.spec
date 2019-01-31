@@ -1,6 +1,6 @@
 Name:           chromaprint
 Version:        1.4.2
-Release:        4%{?dist}
+Release:        5%{?dist}
 Summary:        Library implementing the AcoustID fingerprinting
 
 License:        GPLv2+
@@ -79,6 +79,9 @@ rm  -f %{buildroot}%{_libdir}/lib*.la
 %{_libdir}/pkgconfig/*.pc
 
 %changelog
+* Thu Jan 31 2019 Fedora Release Engineering <releng@fedoraproject.org> - 1.4.2-5
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_30_Mass_Rebuild
+
 * Wed Jan 23 2019 Björn Esser <besser82@fedoraproject.org> - 1.4.2-4
 - Append curdir to CMake invokation. (#1668512)
 
