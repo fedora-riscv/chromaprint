@@ -1,6 +1,6 @@
 Name:           chromaprint
-Version:        1.4.2
-Release:        8%{?dist}
+Version:        1.5.0
+Release:        1%{?dist}
 Summary:        Library implementing the AcoustID fingerprinting
 
 License:        GPLv2+
@@ -21,7 +21,6 @@ The library exposes a simple C API. The documentation for the C API can be
 found in the main header file.
 
 License for binaries is GPLv2+ but source code is MIT + LGPLv2+
-
 
 %package -n libchromaprint
 Summary:        Library implementing the AcoustID fingerprinting
@@ -48,24 +47,23 @@ applications which will use %{name}.
 The library exposes a simple C API. The documentation for the C API can be
 found in the main header file.
 
-
 %prep
-%setup -q
-
-# examples and cli tools equire ffmpeg, so turn off; test depend of external artifact so turn off.
-%{cmake} -DBUILD_EXAMPLES=OFF -DBUILD_TESTS=OFF -DCMAKE_BUILD_TYPE=Release -DBUILD_TOOLS=OFF .
-
+%autosetup -n %{name}-v%{version}
 
 %build
-make %{?_smp_mflags}
+# examples and cli tools equire ffmpeg, so turn off; test depend of external artifact so turn off.
+%cmake \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DBUILD_TESTS=OFF \
+        -DBUILD_TOOLS=OFF \
+        .
 
+%cmake_build
 
 %install
-make install DESTDIR=%{buildroot}
+%cmake_install
+
 rm  -f %{buildroot}%{_libdir}/lib*.la
-
-
-%ldconfig_scriptlets -n libchromaprint
 
 %files -n libchromaprint
 %doc NEWS.txt README.md
@@ -79,8 +77,9 @@ rm  -f %{buildroot}%{_libdir}/lib*.la
 %{_libdir}/pkgconfig/*.pc
 
 %changelog
-* Mon Jul 27 2020 Fedora Release Engineering <releng@fedoraproject.org> - 1.4.2-8
-- Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
+* Tue Jul 28 2020 Andrew Bauer <zonexpertconsulting@outlook.com> - 1.5.0-1
+- modernize specfile
+- Update to 1.5.0 release
 
 * Tue Jan 28 2020 Fedora Release Engineering <releng@fedoraproject.org> - 1.4.2-7
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_32_Mass_Rebuild
