@@ -1,11 +1,20 @@
+%if 0%{?fedora} >= 36
+%bcond_without ffmpeg
+%else
+%bcond_with ffmpeg
+%endif
+
 Name:           chromaprint
 Version:        1.5.1
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Library implementing the AcoustID fingerprinting
 
 License:        GPLv2+
 URL:            http://www.acoustid.org/chromaprint
 Source:         https://github.com/acoustid/%{name}/releases/download/v%{version}/%{name}-%{version}.tar.gz
+
+# From: https://github.com/acoustid/chromaprint/pull/108
+Patch:          chromaprint-PR108-Port-to-ffmpeg-5.patch
 
 BuildRequires:  gcc
 BuildRequires:  gcc-c++
@@ -13,8 +22,8 @@ BuildRequires:  cmake
 BuildRequires:  fftw-devel >= 3
 
 %description
-Chromaprint library is the core component of the AcoustID project. It's a 
-client-side library that implements a custom algorithm for extracting 
+Chromaprint library is the core component of the AcoustID project. It's a
+client-side library that implements a custom algorithm for extracting
 fingerprints from raw audio sources.
 
 The library exposes a simple C API. The documentation for the C API can be
@@ -27,8 +36,8 @@ Summary:        Library implementing the AcoustID fingerprinting
 Obsoletes:      python-chromaprint < 0.6-3
 
 %description -n libchromaprint
-Chromaprint library is the core component of the AcoustID project. It's a 
-client-side library that implements a custom algorithm for extracting 
+Chromaprint library is the core component of the AcoustID project. It's a
+client-side library that implements a custom algorithm for extracting
 fingerprints from raw audio sources.
 
 The library exposes a simple C API. The documentation for the C API can be
@@ -37,26 +46,42 @@ found in the main header file.
 License for binaries is GPLv2+ but source code is MIT + LGPLv2+
 
 %package -n libchromaprint-devel
-Summary:        Headers for developing programs that will use %{name} 
+Summary:        Headers for developing programs that will use %{name}
 Requires:       libchromaprint%{?_isa} = %{version}-%{release}
 
 %description -n libchromaprint-devel
 This package contains the headers that programmers will need to develop
-applications which will use %{name}. 
+applications which will use %{name}.
 
 The library exposes a simple C API. The documentation for the C API can be
 found in the main header file.
 
+%if %{with ffmpeg}
+%package tools
+Summary:        Chromaprint audio fingerprinting tools
+BuildRequires:  ffmpeg-free-devel
+Requires:       libchromaprint%{?_isa} = %{version}-%{release}
+
+%description tools
+Chromaprint library is the core component of the AcoustID project. It's a
+client-side library that implements a custom algorithm for extracting
+fingerprints from raw audio sources.
+
+This is a set of Chromaprint tools related to acoustic fingerprinting
+featuring fpcalc an standalone AcoustID tool used by Picard.
+
+License for binaries is GPLv2+ but source code is MIT + LGPLv2+
+%endif
+
 %prep
-%autosetup -n %{name}-%{version}
+%autosetup -p1
 
 %build
 # examples and cli tools equire ffmpeg, so turn off; test depend of external artifact so turn off.
 %cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_TESTS=OFF \
-        -DBUILD_TOOLS=OFF \
-        .
+        -DBUILD_TOOLS=%{?with_ffmpeg:ON}%{!?with_ffmpeg:OFF}
 
 %cmake_build
 
@@ -76,7 +101,16 @@ rm  -f %{buildroot}%{_libdir}/lib*.la
 %{_libdir}/lib*.so
 %{_libdir}/pkgconfig/*.pc
 
+%if %{with ffmpeg}
+%files tools
+%{_bindir}/fpcalc
+%endif
+
 %changelog
+* Thu Apr 21 2022 Neal Gompa <ngompa@fedoraproject.org> - 1.5.1-3
+- Build tools on F36+ with ffmpeg-free
+- Clean out extra whitespace in the spec file
+
 * Wed Jan 19 2022 Fedora Release Engineering <releng@fedoraproject.org> - 1.5.1-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_36_Mass_Rebuild
 
