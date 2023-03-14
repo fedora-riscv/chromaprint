@@ -1,12 +1,18 @@
+%bcond_without bootstrap
+
+%if %{with bootstrap}
+%bcond_with ffmpeg
+%else
 %if 0%{?fedora} >= 36
 %bcond_without ffmpeg
 %else
 %bcond_with ffmpeg
 %endif
+%endif
 
 Name:           chromaprint
 Version:        1.5.1
-Release:        8%{?dist}
+Release:        9%{?with_bootstrap:_bootstrap}%{?dist}
 Summary:        Library implementing the AcoustID fingerprinting
 
 License:        GPLv2+
@@ -106,6 +112,10 @@ rm  -f %{buildroot}%{_libdir}/lib*.la
 %endif
 
 %changelog
+* Tue Mar 14 2023 Sérgio Basto <sergio@serjux.com> - 1.5.1-9_bootstrap
+- Add a bootstrap package as suggests in
+  https://github.com/acoustid/chromaprint/issues/129#issuecomment-1468612507
+
 * Sun Mar 12 2023 Neal Gompa <ngompa@fedoraproject.org> - 1.5.1-8
 - Rebuild for ffmpeg 6.0
 
