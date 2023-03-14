@@ -21,10 +21,11 @@ Source:         https://github.com/acoustid/%{name}/releases/download/v%{version
 
 Patch1:          https://github.com/acoustid/chromaprint/commit/8ccad6937177b1b92e40ab8f4447ea27bac009a7.patch
 
+BuildRequires:  cmake
 BuildRequires:  gcc
 BuildRequires:  gcc-c++
-BuildRequires:  cmake
 BuildRequires:  fftw-devel >= 3
+BuildRequires:  ninja-build
 
 %description
 Chromaprint library is the core component of the AcoustID project. It's a
@@ -83,7 +84,7 @@ License for binaries is GPLv2+ but source code is MIT + LGPLv2+
 
 %build
 # examples and cli tools equire ffmpeg, so turn off; test depend of external artifact so turn off.
-%cmake \
+%cmake -GNinja \
         -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_TESTS=OFF \
         -DBUILD_TOOLS=%{?with_ffmpeg:ON}%{!?with_ffmpeg:OFF}
@@ -115,6 +116,7 @@ rm  -f %{buildroot}%{_libdir}/lib*.la
 * Tue Mar 14 2023 Sérgio Basto <sergio@serjux.com> - 1.5.1-9_bootstrap
 - Add a bootstrap package as suggests in
   https://github.com/acoustid/chromaprint/issues/129#issuecomment-1468612507
+- Change to Ninja build
 
 * Sun Mar 12 2023 Neal Gompa <ngompa@fedoraproject.org> - 1.5.1-8
 - Rebuild for ffmpeg 6.0
