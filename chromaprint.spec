@@ -1,5 +1,5 @@
 %if 0%{?rhel} && 0%{?rhel} < 9
-%bcond ffmpeg 0
+%bcond_with ffmpeg
 %else
 %bcond ffmpeg %{?with_bootstrap:0}%{!?with_bootstrap:1}
 %endif
