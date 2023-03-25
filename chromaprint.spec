@@ -1,7 +1,7 @@
-%if 0%{?fedora} >= 36 || 0%{!?with_bootstrap}
-%bcond_without ffmpeg
+%if 0%{?rhel} && 0%{?rhel} < 9
+%bcond ffmpeg 0
 %else
-%bcond_with ffmpeg
+%bcond ffmpeg %{?with_bootstrap:0}%{!?with_bootstrap:1}
 %endif
 
 Name:           chromaprint
