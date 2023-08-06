@@ -1,7 +1,7 @@
 %if 0%{?rhel} && 0%{?rhel} < 9
 %bcond_with ffmpeg
 %else
-#bcond ffmpeg %{?with_bootstrap:0}%{!?with_bootstrap:1}
+%bcond ffmpeg %{?with_bootstrap:0}%{!?with_bootstrap:1}
 %endif
 # Globing of libraries is against the packging guidelines
 %global sover 1
@@ -9,7 +9,7 @@
 
 Name:           chromaprint
 Version:        1.5.1
-Release:        12%{?dist}
+Release:        13%{?dist}
 Summary:        Library implementing the AcoustID fingerprinting
 
 License:        GPLv2+
@@ -109,6 +109,9 @@ rm  -f %{buildroot}%{_libdir}/lib*.la
 %endif
 
 %changelog
+* Sun Aug 06 2023 Richard Shaw <hobbes1069@gmail.com> - 1.5.1-13
+- Rebuild post bootstrap build for ffmpeg/codec2.
+
 * Sun Aug 06 2023 Richard Shaw <hobbes1069@gmail.com> - 1.5.1-12
 - Rebuild without ffmpeg to break circular dependency with ffmpeg/codec2.
 - Add %%sover to prevent accidental soname bumps.
